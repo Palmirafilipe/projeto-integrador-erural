@@ -1,10 +1,11 @@
 CREATE TABLE `tb_produto` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`categoria_id` INT NOT NULL,
-	`nome` varchar(255) NOT NULL,
+	`nome` varchar(min = 3, max = 30) NOT NULL,
 	`quantidade` INT NOT NULL,
 	`peso` FLOAT NOT NULL,
-	`valor` DECIMAL NOT NULL,
+	`preco` DECIMAL NOT NULL,
+	`imagem` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -18,9 +19,9 @@ CREATE TABLE `tb_usuario` (
 
 CREATE TABLE `tb_categoria` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`outros` varchar(255) NOT NULL,
-	`legumes` varchar(255) NOT NULL,
-	`frutas` varchar(255) NOT NULL,
+	`nome` varchar(min = 3, max = 30) NOT NULL,
+	`descricao` varchar(min = 3, max = 30) NOT NULL,
+	`imagem` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
