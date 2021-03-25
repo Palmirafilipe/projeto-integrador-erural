@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.community.eRural.Repository.CategoriasRepository;
 import com.community.eRural.model.Categorias;
 
-@RestController
-@RequestMapping("/categorias")
-@CrossOrigin(origins= "*", allowedHeaders = "*")
+@RestController //ESSE CHAMA A BIBLIOTECA CONTROLLER 
+@RequestMapping("/categorias")//SERVE P/ FAZER UM EDPOINT
+@CrossOrigin(origins= "*", allowedHeaders = "*")// ESSES * SERVE P/ RODAR EM VARIAS FRAMEWORKS
 public class CategoriasController {
 	
-	@Autowired
+	@Autowired// SERVE P/ INSERIR(INJETAR) A CATEGORIASREPOSITORY
 	private CategoriasRepository repository;
 	
 	@GetMapping
@@ -32,26 +32,31 @@ public class CategoriasController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Categorias> GetById(@PathVariable long id) {
-		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<Categorias> GetById(@PathVariable long id) {//PROCURAR NA URL @PATHVARIABLE
+		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());//LAMBDA
 	}
 	
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity<List<Categorias>> GetByNome(@PathVariable String nome) {
-		return ResponseEntity.ok(repository.findAllByNomeContainingIgnoreCase(nome));
+		return ResponseEntity.ok(repository.findAllByNomeContainingIgnoreCase(nome));//FAZ PARTE DO CATEGORIASREPOSITORY
 	}
 	
-	@PostMapping
+	@GetMapping("/descricao/{descricao}")
+	public ResponseEntity<List<Categorias>> GetByDescricao(@PathVariable String descricao) {
+		return ResponseEntity.ok(repository.findAllByDescricaoContainingIgnoreCase(descricao));//FAZ PARTE DO CATEGORIASREPOSITORY
+	}
+	
+	@PostMapping//INSERIR DADOS NO BANCO
 	public ResponseEntity<Categorias> post(@RequestBody Categorias categorias) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categorias));
 	}
 
-	@PutMapping
+	@PutMapping//CRINADO ALTERAÇÕES
 	public ResponseEntity<Categorias> put(@RequestBody Categorias categorias) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(categorias));
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{id}")//APAGAR DADOS DA TABELA PELO ID
 	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}

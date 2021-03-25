@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.URL;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -18,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Categorias {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//@GENERATEVALUE == CRIAR UM ID AUTOMATICO
 	private long id;
 	
 	@NotNull
@@ -30,7 +32,7 @@ public class Categorias {
 	private String descricao;
 	
 	@NotNull
-	@Size(max = 250)
+	@URL 
 	private String imagem;
 
 	@OneToMany(mappedBy = "categorias" , cascade = CascadeType.ALL)
@@ -68,9 +70,5 @@ public class Categorias {
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
-	}
-
-
-		
-	
+	}	
 }
